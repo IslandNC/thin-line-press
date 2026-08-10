@@ -68,6 +68,7 @@ To change the deployment source: **Settings → Pages → Build and deployment**
 - **If you give an `<img>` `width`/`height` attributes, make sure its CSS rule sets a height** (usually `height:auto`). Otherwise the attribute acts as a presentational hint for height and the image is stretched. `check-site.py` enforces this.
 - **Absolute URLs live in the head.** The canonical link, Open Graph tags and JSON-LD hard-code `https://islandnc.github.io/thin-line-press/`. If the site moves to a custom domain, update those, `robots.txt`, `sitemap.xml`, and the three `/thin-line-press/` paths in `404.html`.
 - **Book facts appear in two places** — the visible `.record-details` list and the JSON-LD `Book` node. Keep the ISBN, page count and price in step with the [CLAWDIA site](https://github.com/IslandNC/clawdia-book), which is the source of truth.
+- **The signup form** posts to `https://formsubmit.co/ajax/ThinLinePress@pm.me` — the same endpoint the CLAWDIA site uses, distinguished by its `_subject`. It is the one third-party call the site makes, and only when someone submits. If the endpoint fails the reader still sees the confirmation, so check the inbox rather than trusting the UI.
 - **Social preview** is `assets/og-cover.jpg`. After changing it, re-scrape in the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) — LinkedIn caches aggressively.
 - **Fonts** were generated from the Google Fonts `css2` endpoint, latin and latin-ext only. To add a weight or subset, re-request that endpoint and drop the new woff2 into `assets/fonts/`.
 
