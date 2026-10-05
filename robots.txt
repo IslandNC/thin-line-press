@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://islandnc.github.io/thin-line-press/sitemap.xml
+Sitemap: https://thinlinepress.com.au/sitemap.xml
