@@ -45,6 +45,26 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media(max-width:700px){.hero{min-height:100svh}.hero h1{font-size:clamp(3.4rem,15.5vw,5rem);line-height:.98;letter-spacing:-.05em;padding-bottom:.08em;overflow-wrap:break-word}.page h1{line-height:.96;letter-spacing:-.05em;padding-bottom:.06em}.hero-left{padding-bottom:calc(14vw + env(safe-area-inset-bottom,0px))}}
 @media(max-width:760px){.hero{align-items:start}.hero-bg{background:linear-gradient(0deg,#080808 0%,#080808 34%,transparent 62%),url('/assets/clawdia-cover.jpg') center 70px/100% auto no-repeat #080808;transform:none;animation:none}.hero-left{padding-top:calc(66px + 98vw);padding-bottom:calc(12vw + env(safe-area-inset-bottom,0px))}}
+/* v5 contrast: WCAG AA/AAA on red surfaces */
+:root{--red-deep:#a81f10;--red-btn:#c92a14}
+.why{background:var(--red-deep);color:#fff}
+.why h2{color:#fff;letter-spacing:-.05em;line-height:.96}
+.why .section-index{color:#ffe3da;font-size:11px}
+.why p{font-size:clamp(18px,1.55vw,21px);line-height:1.65;font-weight:500;max-width:60ch;text-wrap:pretty;color:#fff}
+.why .button{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.why .button:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.button{background:var(--red-btn);border-color:var(--red-btn);font-size:11px}
+.button:hover{background:var(--red-deep);border-color:var(--red-deep)}
+.button.black{background:var(--ink);border-color:var(--ink)}
+.button.black:hover{background:var(--red-btn);border-color:var(--red-btn)}
+.langs a[aria-current]{background:var(--red-btn)}
+.ticker{background:var(--red-deep)}
+.ticker span{color:#fff}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.author .section-index,.author .byline,.press .section-index{color:var(--red-deep)}
+.why .section-index{margin-bottom:20px;display:block}
+.signup input::placeholder,.signup-note{color:#9a9389}
+.button.outline{color:var(--paper);border-color:#ff6a55;background:transparent}.button.outline:hover{background:var(--red-btn);border-color:var(--red-btn);color:#fff}
 </style>
 <script type="application/ld+json">
 {
