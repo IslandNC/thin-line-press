@@ -2,33 +2,27 @@
 
 > Where the line breaks.
 
-The website of **Thin Line Press** — fiction for readers at the edge of technology, obsession, and what it means to be human.
+Website of **Thin Line Press**, an independent imprint publishing fiction at the edge of technology, obsession, and what it means to be human. The debut title is **CLAWDIA** by Frederic Cornaille.
 
-**Live site:** <https://islandnc.github.io/thin-line-press/>
+Live site: <https://thinlinepress.com.au> (English) and <https://thinlinepress.com.au/fr/> (French).
 
-The press's debut title is [**CLAWDIA**](https://islandnc.github.io/clawdia-book/), a psychological thriller by Frederic Cornaille (ISBN 978-1-7646688-0-4).
+Book site: <https://clawdia.thinlinepress.com.au> (repository: [IslandNC/clawdia-book](https://github.com/IslandNC/clawdia-book)).
 
----
+## What this repository is
 
-## What's here
-
-A single-page static site. No build step, no dependencies, no framework — open `index.html` in a browser and it runs. Nothing is fetched from a third party at runtime: fonts are served from this repository, so the site makes no external requests at all.
+A static, bilingual (EN/FR) site served by GitHub Pages from the `main` branch. No framework, no server-side code, no analytics. Fonts are self-hosted, so the pages load no third-party fonts.
 
 ```
-index.html          The site
-404.html            Branded not-found page
-assets/
-  clawdia-cover.jpg       Book cover — hero background and cover plate
-  clawdia-quote-card.jpg  Pull-quote card in the "Inside the system" section
-  clawdia-title-page.jpg  Title page shown in the brief modal
-  og-cover.jpg            1200×630 social sharing card
-  favicon.svg             Press mark — a broken line
-  fonts.css               @font-face declarations
-  fonts/                  Self-hosted woff2 (latin + latin-ext subsets)
-tools/check-site.py Pre-flight checks — run before pushing
-robots.txt          Crawl policy
-sitemap.xml         Single-URL sitemap
-.nojekyll           Serve files verbatim; skip GitHub's Jekyll build
+index.html        English home page
+fr/               French home page
+reviews/          English page for leaving a review
+avis/             French page for leaving a review
+404.html          Branded not-found page
+assets/           Images, stylesheet, script and self-hosted fonts
+tools/            check-site.py, a pre-publish check
+CNAME             Custom domain
+.nojekyll         Serve files verbatim
+robots.txt, sitemap.xml
 ```
 
 ## Local preview
@@ -37,7 +31,7 @@ sitemap.xml         Single-URL sitemap
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. Opening `index.html` directly via `file://` also works.
+Then open <http://localhost:8000>. Use a local server rather than `file://`, because the pages use root-relative paths.
 
 ## Checks
 
@@ -45,35 +39,16 @@ Then open <http://localhost:8000>. Opening `index.html` directly via `file://` a
 python3 tools/check-site.py
 ```
 
-Run this before pushing. It verifies that every asset reference resolves, every in-page anchor has a target, no local filesystem path leaks into the markup, the JSON-LD parses, the social metadata is present, and nothing is loaded from a third party.
-
-It then renders the page in headless Chrome and measures the result — confirming images load and keep their aspect ratio, and that the page does not overflow horizontally. That render step exists because the two worst bugs this site has had were invisible to static analysis:
-
-- navigation links pointing at absolute `file:///` URLs, which broke every anchor once served and leaked a local directory tree;
-- an `<img>` with `width`/`height` attributes but only a CSS `width`, so the height presentational hint survived and the cover rendered at 3.5× its correct height.
-
-Both now fail the checks. The same script runs in CI on every push via `.github/workflows/check.yml`, which also verifies that outbound links still resolve.
-
-Chrome is found automatically on macOS, or via `CHROME_BIN`. If no Chrome is present the render checks are skipped and the static checks still run.
+Run it before pushing. It currently checks `index.html` and `404.html` only: asset references, in-page anchors, JSON-LD, social metadata, and a headless render for overflow and image aspect ratio. The French page and the review pages are not covered yet.
 
 ## Deployment
 
-GitHub Pages serves the `main` branch from `/ (root)`. Pushing to `main` publishes; there is no build step.
-
-To change the deployment source: **Settings → Pages → Build and deployment**.
-
-## Editing notes
-
-- **Section links are fragment anchors** (`#book`, `#author`, `#press`). Keep them relative.
-- **If you give an `<img>` `width`/`height` attributes, make sure its CSS rule sets a height** (usually `height:auto`). Otherwise the attribute acts as a presentational hint for height and the image is stretched. `check-site.py` enforces this.
-- **Absolute URLs live in the head.** The canonical link, Open Graph tags and JSON-LD hard-code `https://islandnc.github.io/thin-line-press/`. If the site moves to a custom domain, update those, `robots.txt`, `sitemap.xml`, and the three `/thin-line-press/` paths in `404.html`.
-- **Book facts appear in two places** — the visible `.record-details` list and the JSON-LD `Book` node. Keep the ISBN, page count and price in step with the [CLAWDIA site](https://github.com/IslandNC/clawdia-book), which is the source of truth.
-- **The signup form** posts to `https://formsubmit.co/ajax/ThinLinePress@pm.me` — the same endpoint the CLAWDIA site uses, distinguished by its `_subject`. It is the one third-party call the site makes, and only when someone submits. If the endpoint fails the reader still sees the confirmation, so check the inbox rather than trusting the UI.
-- **Social preview** is `assets/og-cover.jpg`. After changing it, re-scrape in the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) — LinkedIn caches aggressively.
-- **Fonts** were generated from the Google Fonts `css2` endpoint, latin and latin-ext only. To add a weight or subset, re-request that endpoint and drop the new woff2 into `assets/fonts/`.
+GitHub Pages serves `main` from `/ (root)`. Pushing to `main` publishes. HTTPS is enforced under Settings, Pages.
 
 ## Licence
 
-The site code is available under the MIT Licence (see [LICENSE](LICENSE)).
+All rights reserved. See [LICENSE](LICENSE). The only exception is `tools/check-site.py`, which is MIT.
 
-The book cover, title page, quote card, and all text about CLAWDIA and Thin Line Press are © Frederic Cornaille and are **not** covered by that licence. The bundled fonts (Manrope, Playfair Display, DM Mono) are licensed under the [SIL Open Font License 1.1](https://openfontlicense.org/).
+## Security
+
+See [SECURITY.md](SECURITY.md).
